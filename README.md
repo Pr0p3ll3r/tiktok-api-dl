@@ -864,10 +864,7 @@ interface TiktokUserSearchResponse {
 ### Live Search Response
 
 <details>
-<<<<<<< HEAD
 <summary>Click to expand</summary>
-=======
->>>>>>> 0faec9d6c3879db096e5b668c35e0e323900e47b
 
 ```typescript
 interface TiktokLiveSearchResponse {
@@ -1434,10 +1431,7 @@ result?: {
 ### Trending Response
 
 <details>
-<<<<<<< HEAD
 <summary>Click to expand</summary>
-=======
->>>>>>> 0faec9d6c3879db096e5b668c35e0e323900e47b
 
 ```typescript
 interface TiktokTrendingResponse {
