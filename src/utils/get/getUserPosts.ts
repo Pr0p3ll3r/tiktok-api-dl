@@ -56,7 +56,8 @@ export const getUserPosts = async (
           cleanUsername,
           profileRes.status === "success" ? profileRes.result : undefined,
           postLimit,
-          proxy
+          proxy,
+          cookies
         )
       } catch (embedErr: any) {
         if (embedErr.message === "User not found!") {
@@ -116,7 +117,8 @@ export const fetchPostsFromEmbed = async (
   username: string,
   profileUser?: any,
   postLimit?: number,
-  proxy?: string
+  proxy?: string,
+  cookies?: string
 ): Promise<Posts[]> => {
   const cleanUsername = username.replace(/^@/, "").trim()
   const url = `${_tiktokDesktopUrl}/embed/@${cleanUsername}`
@@ -125,8 +127,10 @@ export const fetchPostsFromEmbed = async (
     headers: {
       "User-Agent": userAgent,
       Accept:
-        "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
-      "Accept-Language": "en-US,en;q=0.9"
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+      "Accept-Language": "en-US,en;q=0.9",
+      Referer: "https://www.tiktok.com/",
+      ...(cookies ? { Cookie: cookies } : {})
     },
     ...createDispatcher(proxy)
   })
@@ -136,6 +140,9 @@ export const fetchPostsFromEmbed = async (
   }
 
   if (!res.ok) {
+    if (res.status === 500 || res.status === 403) {
+      throw new Error(`TikTok blocked embed request (HTTP ${res.status}). Datacenter IP detected on server. Provide a proxy or cookie.`)
+    }
     throw new Error(`HTTP error: ${res.status}`)
   }
 
@@ -416,7 +423,7 @@ const parseUserPosts = async (
 }
 
 const userAgent =
-  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/144.0.0.0 Safari/537.36 Edg/144.0.0.0"
+  "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 
 const requestUserPosts = async (
   secUid: string,
