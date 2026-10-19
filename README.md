@@ -50,6 +50,7 @@
   - [Tiktok Stalk User Profile](#tiktok-stalk-user-profile)
   - [Tiktok Video User Comments](#tiktok-video-comments)
   - [Tiktok Get User Posts](#tiktok-get-user-posts)
+  - [Tiktok Get Stats](#tiktok-get-stats)
   - [Tiktok Get User Reposts](#tiktok-get-user-reposts)
   - [Tiktok Get User Favorite Videos](#tiktok-get-user-favorite-videos)
   - [Tiktok Collection](#tiktok-collection)
@@ -66,6 +67,7 @@
   - [Tiktok Stalk User Profile](#tiktok-stalk-user-profile-1)
   - [Tiktok Video Comments](#tiktok-video-comments-1)
   - [Tiktok User Posts](#tiktok-user-posts)
+  - [Tiktok Get Stats](#tiktok-get-stats-response)
   - [Tiktok User Reposts](#tiktok-user-reposts)
   - [Tiktok User Favorite Videos](#tiktok-user-favorite-videos)
   - [Tiktok Collection](#tiktok-collection-1)
@@ -85,6 +87,7 @@ Note : `This project uses the API from Tiktok & Unofficial Tiktok API from Anoth
 - This project is also made to help users to view comments from a video on Tiktok.
 - This project is also made to help users to search for users, live streams and videos on Tiktok.
 - This project is also made to help users to get user's posts, reposts and liked videos from Tiktok.
+- This project is also made to help users to get post statistics (views, likes, comments, shares, downloads, favorites) in single or batch queries.
 - This project is made to help users to get videos, images / slides from a Tiktok collection or playlist.
 - This project is also made to help users to get trending content and creators from Tiktok.
 - This project is also made to help users to get videos that use a specific music/audio track by music ID from Tiktok.
@@ -375,6 +378,22 @@ tiktokdl getuserposts <username> -l 10 -proxy "http://your-proxy-url"
 ```
 
 - [Tiktok User Posts Response](#tiktok-user-posts)
+
+## Tiktok Get Stats
+
+```javascript
+const Tiktok = require("@tobyg74/tiktok-api-dl")
+
+// Single post ID or URL
+Tiktok.GetStats("7698087411321949471").then((result) => console.log(result))
+
+// Batch array of post IDs and/or URLs
+Tiktok.GetStats(["7698087411321949471", "https://www.tiktok.com/@username/video/7697653789007908126"], {
+  proxy: "YOUR_PROXY" // optional
+}).then((result) => console.log(result))
+```
+
+- [Tiktok Get Stats Response](#tiktok-get-stats-response)
 
 ## Tiktok Get User Reposts
 
@@ -1036,20 +1055,9 @@ interface TiktokUserPostsResponse {
     id: string
     desc: string
     createTime: number
-    digged: number
-    duetEnabled: number
-    forFriend: number
-    officalItem: number
-    originalItem: number
-    privateItem: number
-    shareEnabled: number
-    stitchEnabled: number
+    privateItem: boolean
     stats: {
-      collectCount: number
-      commentCount: number
-      likeCount: number
       playCount: number
-      shareCount: number
     }
     author: {
       id: string
@@ -1065,32 +1073,41 @@ interface TiktokUserPostsResponse {
       isADVirtual: boolean
       isEmbedBanned: boolean
     }
-    video?: {
+    video: {
       id: string
-      duration: number
+      format: string
       ratio: string
       cover: string
       originCover: string
       dynamicCover: string
       playAddr: string
       downloadAddr: string
-      format: string
-      bitrate: number
     }
-    music: {
-      authorName: string
-      coverLarge: string
-      coverMedium: string
-      coverThumb: string
-      duration: number
-      id: string
-      title: string
-      playUrl: string
-      original: boolean
-    }
-    images?: string[]
   }>
   totalPosts?: number
+}
+```
+
+</details>
+
+## Tiktok Get Stats Response
+
+<details>
+<summary>Click to expand</summary>
+
+```typescript
+interface TiktokGetStatsResponse {
+  status: "success" | "error"
+  message?: string
+  result?: Array<{
+    id: string
+    likeCount: number
+    commentCount: number
+    shareCount: number
+    playCount: number
+    downloadCount: number
+    collectCount: number
+  }>
 }
 ```
 
