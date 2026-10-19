@@ -17,6 +17,7 @@ import {
 } from "./types/get/getTrendings"
 import { TiktokMusicVideosResponse } from "./types/get/getMusicVideos"
 import { TiktokMusicDetailResponse } from "./types/get/getMusicDetail"
+import { TiktokGetStatsResponse, PostStats } from "./types/get/getStats"
 
 /** Services */
 import { TiktokAPI } from "./utils/downloader/tiktokAPIDownloader"
@@ -34,6 +35,7 @@ import { getCollection } from "./utils/get/getCollection"
 import { getTrendings, getTrendingCreators } from "./utils/get/getTrendings"
 import { getMusicVideos } from "./utils/get/getMusicVideos"
 import { getMusicDetail } from "./utils/get/getMusicDetail"
+import { getStats } from "./utils/get/getStats"
 
 /** Constants */
 import { DOWNLOADER_VERSIONS, SEARCH_TYPES } from "./constants"
@@ -450,5 +452,19 @@ export = {
    */
   TrendingCreators: async (options?: { proxy?: string }) => {
     return await getTrendingCreators(options?.proxy)
+  },
+
+  /**
+   * Get Pure Statistics for Videos or Image Posts (Batch or Single)
+   * @param {string|string[]} idsOrUrls - Post ID, URL, or an array of IDs/URLs
+   * @param {Object} [options] - Options
+   * @param {string} [options.proxy] - Optional proxy URL
+   * @returns {Promise<TiktokGetStatsResponse>}
+   */
+  GetStats: async (
+    idsOrUrls: string | string[],
+    options?: { proxy?: string }
+  ): Promise<TiktokGetStatsResponse> => {
+    return await getStats(idsOrUrls, options?.proxy)
   }
 }
