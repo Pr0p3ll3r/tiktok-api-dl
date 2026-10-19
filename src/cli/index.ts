@@ -389,11 +389,7 @@ program
           Logger.result(`Video ID: ${post.id}`, chalk.green)
           Logger.result(`Description: ${post.desc}`, chalk.yellow)
           Logger.info(`---- STATISTICS ----`)
-          Logger.result(`Likes: ${post.stats.likeCount}`, chalk.yellow)
-          Logger.result(`Favorites: ${post.stats.collectCount}`, chalk.yellow)
           Logger.result(`Views: ${post.stats.playCount}`, chalk.yellow)
-          Logger.result(`Shares: ${post.stats.shareCount}`, chalk.yellow)
-          Logger.result(`Comments: ${post.stats.commentCount}`, chalk.yellow)
         }
         Logger.info(`Total posts: ${data.length}`)
       } else {

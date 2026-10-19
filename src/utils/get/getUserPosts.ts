@@ -4,6 +4,8 @@ import { _tiktokDesktopUrl } from "../../constants/api"
 import {
   AuthorPost,
   Posts,
+  StatsPost,
+  VideoPost,
   TiktokUserPostsResponse
 } from "../../types/get/getUserPosts"
 import { StalkUser } from "../get/getProfile"
@@ -215,11 +217,9 @@ export const fetchPostsFromEmbed = async (
       isEmbedBanned: Boolean(profileUser?.user?.isEmbedBanned)
     }
 
-    const video = {
+    const video: VideoPost = {
       id: String(v.id),
-      duration: v.video?.duration || 0,
-      format: v.video?.format || "mp4",
-      bitrate: v.video?.bitrate || 0,
+      format: "mp4",
       ratio: v.ratio || v.video?.ratio || "720p",
       playAddr: v.playAddr || v.video?.playAddr || "",
       cover: v.coverUrl || v.video?.cover || "",
@@ -228,42 +228,18 @@ export const fetchPostsFromEmbed = async (
       downloadAddr: v.playAddr || v.video?.downloadAddr || ""
     }
 
-    const stats = {
-      likeCount: v.stats?.likeCount || 0,
-      collectCount: v.stats?.collectCount || 0,
-      commentCount: v.stats?.commentCount || 0,
-      playCount: v.playCount || v.stats?.playCount || 0,
-      shareCount: v.stats?.shareCount || 0
-    }
-
-    const music = {
-      id: "",
-      title: "",
-      authorName: author.nickname,
-      coverLarge: "",
-      coverMedium: "",
-      coverThumb: "",
-      duration: 0,
-      playUrl: "",
-      original: true
+    const stats: StatsPost = {
+      playCount: v.playCount || v.stats?.playCount || 0
     }
 
     return {
       id: String(v.id),
       desc: v.desc || "",
       createTime,
-      digged: 0,
-      duetEnabled: 1,
-      forFriend: 0,
-      officalItem: 0,
-      originalItem: 0,
-      privateItem: v.privateItem ? 1 : 0,
-      shareEnabled: 1,
-      stitchEnabled: 1,
+      privateItem: Boolean(v.privateItem),
       stats,
       author,
-      video,
-      music
+      video
     }
   })
 
@@ -316,92 +292,30 @@ const parseUserPosts = async (
         isEmbedBanned: Boolean(v.author?.isEmbedBanned)
       }
 
-      if (v.imagePost) {
-        const imagePost: string[] = (v.imagePost.images || []).map(
-          (img: any) => img.imageURL?.urlList?.[0] || ""
-        )
-
-        posts.push({
-          id: String(v.id),
-          desc: v.desc || "",
-          createTime: v.createTime || 0,
-          digged: v.digged || 0,
-          duetEnabled: v.duetEnabled || 0,
-          forFriend: v.forFriend || 0,
-          officalItem: v.officalItem || 0,
-          originalItem: v.originalItem || 0,
-          privateItem: v.privateItem || 0,
-          shareEnabled: v.shareEnabled || 0,
-          stitchEnabled: v.stitchEnabled || 0,
-          stats: v.stats || {
-            collectCount: 0,
-            commentCount: 0,
-            likeCount: 0,
-            playCount: 0,
-            shareCount: 0
-          },
-          music: v.music || {
-            id: "",
-            title: "",
-            authorName: "",
-            coverLarge: "",
-            coverMedium: "",
-            coverThumb: "",
-            duration: 0,
-            playUrl: "",
-            original: false
-          },
-          author,
-          imagePost
-        })
-      } else {
-        const video = {
-          id: String(v.video?.id || v.id),
-          duration: v.video?.duration || 0,
-          format: v.video?.format || "mp4",
-          bitrate: v.video?.bitrate || 0,
-          ratio: v.video?.ratio || "720p",
-          playAddr: v.video?.playAddr || "",
-          cover: v.video?.cover || "",
-          originCover: v.video?.originCover || "",
-          dynamicCover: v.video?.dynamicCover || "",
-          downloadAddr: v.video?.downloadAddr || ""
-        }
-
-        posts.push({
-          id: String(v.id),
-          desc: v.desc || "",
-          createTime: v.createTime || 0,
-          digged: v.digged || 0,
-          duetEnabled: v.duetEnabled || 0,
-          forFriend: v.forFriend || 0,
-          officalItem: v.officalItem || 0,
-          originalItem: v.originalItem || 0,
-          privateItem: v.privateItem || 0,
-          shareEnabled: v.shareEnabled || 0,
-          stitchEnabled: v.stitchEnabled || 0,
-          stats: v.stats || {
-            collectCount: 0,
-            commentCount: 0,
-            likeCount: 0,
-            playCount: 0,
-            shareCount: 0
-          },
-          music: v.music || {
-            id: "",
-            title: "",
-            authorName: "",
-            coverLarge: "",
-            coverMedium: "",
-            coverThumb: "",
-            duration: 0,
-            playUrl: "",
-            original: false
-          },
-          author,
-          video
-        })
+      const stats: StatsPost = {
+        playCount: v.stats?.playCount || 0
       }
+
+      const video: VideoPost = {
+        id: String(v.video?.id || v.id),
+        format: v.video?.format || "mp4",
+        ratio: v.video?.ratio || "720p",
+        playAddr: v.video?.playAddr || "",
+        cover: v.video?.cover || "",
+        originCover: v.video?.originCover || "",
+        dynamicCover: v.video?.dynamicCover || "",
+        downloadAddr: v.video?.downloadAddr || ""
+      }
+
+      posts.push({
+        id: String(v.id),
+        desc: v.desc || "",
+        createTime: v.createTime || 0,
+        privateItem: Boolean(v.privateItem),
+        stats,
+        author,
+        video
+      })
     })
 
     hasMore = Boolean(result.hasMore)

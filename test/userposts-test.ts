@@ -30,16 +30,10 @@ async function testUserPosts() {
         }
         if (post.stats) {
           console.log("Statistics:")
-          console.log(`- Likes: ${post.stats.likeCount}`)
-          console.log(`- Comments: ${post.stats.commentCount}`)
-          console.log(`- Shares: ${post.stats.shareCount}`)
           console.log(`- Plays: ${post.stats.playCount}`)
         }
         if (post.video?.playAddr) {
           console.log(`Video URL: ${post.video.playAddr}`)
-        }
-        if (post.imagePost?.length) {
-          console.log(`Images: ${post.imagePost.join(", ")}`)
         }
         console.log("========================")
       })
