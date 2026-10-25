@@ -17,11 +17,11 @@ export type Author = {
 }
 
 export type Statistics = {
+  playCount?: number
   likeCount?: string | number
   commentCount?: string | number
+  saveCount?: number
   shareCount?: string | number
-  playCount?: number
-  downloadCount?: number
 }
 
 export type Video = {

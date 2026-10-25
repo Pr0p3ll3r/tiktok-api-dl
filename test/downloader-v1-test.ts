@@ -23,6 +23,7 @@ async function testDownloaderV1() {
         console.log(`- Comments: ${r.statistics.commentCount}`)
         console.log(`- Shares: ${r.statistics.shareCount}`)
         console.log(`- Plays: ${r.statistics.playCount}`)
+        console.log(`- Saves: ${r.statistics.saveCount}`)
       }
       if (r.video?.playAddr?.length) {
         console.log(`Video URL: ${r.video.playAddr[0]}`)

@@ -12,11 +12,11 @@ export type Author = {
     url?: string;
 };
 export type Statistics = {
+    playCount?: number;
     likeCount?: string | number;
     commentCount?: string | number;
+    saveCount?: number;
     shareCount?: string | number;
-    playCount?: number;
-    downloadCount?: number;
 };
 export type Video = {
     ratio?: string;

@@ -562,6 +562,10 @@ program
               `Plays: ${video.statistics.playCount || 0}`,
               chalk.yellow
             )
+            Logger.result(
+              `Saves: ${video.statistics.saveCount || 0}`,
+              chalk.yellow
+            )
           }
 
           if (video.video) {

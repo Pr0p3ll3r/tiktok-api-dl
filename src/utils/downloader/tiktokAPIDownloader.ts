@@ -24,11 +24,11 @@ const extractVideoId = (responseUrl: string): string | null => {
 }
 
 const parseStatistics = (content: any): StatisticsTiktokAPI => ({
-  commentCount: content.statistics.comment_count,
-  likeCount: content.statistics.digg_count,
-  shareCount: content.statistics.share_count,
   playCount: content.statistics.play_count,
-  downloadCount: content.statistics.download_count
+  likeCount: content.statistics.digg_count,
+  commentCount: content.statistics.comment_count,
+  saveCount: content.statistics.collect_count,
+  shareCount: content.statistics.share_count
 })
 
 const parseAuthor = (content: any): AuthorTiktokAPI => ({
