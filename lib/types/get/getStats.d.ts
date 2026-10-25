@@ -1,11 +1,10 @@
 export interface PostStats {
     id: string;
+    playCount: number;
     likeCount: number;
     commentCount: number;
+    saveCount: number;
     shareCount: number;
-    playCount: number;
-    downloadCount: number;
-    collectCount: number;
 }
 export interface TiktokGetStatsResponse {
     status: "success" | "error";

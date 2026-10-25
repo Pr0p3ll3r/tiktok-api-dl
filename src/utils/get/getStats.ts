@@ -39,12 +39,11 @@ const fetchFromTikwm = async (id: string, proxy?: string): Promise<PostStats | n
     const d = json.data
     return {
       id,
+      playCount: d.play_count || 0,
       likeCount: d.digg_count || 0,
       commentCount: d.comment_count || 0,
-      shareCount: d.share_count || 0,
-      playCount: d.play_count || 0,
-      downloadCount: d.download_count || 0,
-      collectCount: d.collect_count || 0
+      saveCount: d.collect_count || 0,
+      shareCount: d.share_count || 0
     }
   } catch {
     return null
@@ -85,12 +84,11 @@ const fetchFromTikTokFeed = async (id: string, proxy?: string): Promise<PostStat
     const s = content.statistics
     return {
       id,
+      playCount: s.play_count || 0,
       likeCount: s.digg_count || 0,
       commentCount: s.comment_count || 0,
-      shareCount: s.share_count || 0,
-      playCount: s.play_count || 0,
-      downloadCount: s.download_count || 0,
-      collectCount: s.collect_count || 0
+      saveCount: s.collect_count || 0,
+      shareCount: s.share_count || 0
     }
   } catch {
     return null

@@ -1098,12 +1098,11 @@ interface TiktokGetStatsResponse {
   message?: string
   result?: Array<{
     id: string
+    playCount: number
     likeCount: number
     commentCount: number
+    saveCount: number
     shareCount: number
-    playCount: number
-    downloadCount: number
-    collectCount: number
   }>
 }
 ```
