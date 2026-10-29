@@ -88,10 +88,11 @@ const parseDataUser = (dataUser: any) => {
     avatarThumb: dataUser.user.avatarThumb,
     avatarMedium: dataUser.user.avatarMedium,
     signature: dataUser.user.signature,
+    bioLink: dataUser.user.bioLink?.link || null,
     verified: dataUser.user.verified,
     privateAccount: dataUser.user.privateAccount,
     region: dataUser.user.region,
-    commerceUser: dataUser.user.commerceUserInfo.commerceUser,
+    commerceUser: Boolean(dataUser.user.commerceUserInfo?.commerceUser),
     usernameModifyTime: dataUser.user.uniqueIdModifyTime,
     nicknameModifyTime: dataUser.user.nickNameModifyTime,
     secUid: dataUser.user.secUid

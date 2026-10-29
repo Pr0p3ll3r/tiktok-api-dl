@@ -16,6 +16,7 @@ export type UserProfile = {
   avatarThumb: string
   avatarMedium: string
   signature: string
+  bioLink: string | null
   verified: boolean
   privateAccount: boolean
   region: string
